@@ -1,7 +1,5 @@
 "use client"
 
-import { requestPermission } from "@/firebase"
-
 const subscribe = () => {
     const body = {
         token: "alsjdhlkajhsdlana;lsdm;lasmdaswjeha",

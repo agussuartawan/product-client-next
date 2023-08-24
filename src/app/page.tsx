@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from "next/image"
 import Subscribe from "@/component/Subscribe"
 
 export default function Home() {
