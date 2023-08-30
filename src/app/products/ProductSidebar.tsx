@@ -1,11 +1,22 @@
 "use client"
 
-function filterByCategory(categorry: string) {
-
-}
+import React from "react"
+import { fetchList } from "@/app/products/page"
 
 export function ProductSidebar(props: {categories: string[]}) {
     const {categories} = props
+
+    let categoryArray: string[] = []
+
+    const filterByCategory = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const category = event.target.value
+        if (event.target.checked) {
+            categoryArray.push(category)
+        } else {
+            categoryArray = categoryArray.filter((e) => e != category)
+        }
+        fetchList(categoryArray)
+    }
 
     return (
         <>
@@ -40,7 +51,7 @@ export function ProductSidebar(props: {categories: string[]}) {
                         {categories.map((c, index) =>
                             <div key={index} className="flex items-center mb-4 px-2">
                                 <input
-                                    onChange={() => filterByCategory(c)}
+                                    onChange={filterByCategory}
                                     id={`checkbox-${index}`}
                                     type="checkbox"
                                     value={c}

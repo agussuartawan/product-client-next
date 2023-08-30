@@ -11,8 +11,19 @@ interface Category {
     categories: string[]
 }
 
-const fetchList = async (): Promise<Product[]> => {
-    const data = await fetch(`${process.env.PRODUCT_URL}/api/v1/products`, {cache: "no-cache"})
+export async function fetchList(categories?: string[], name?: string): Promise<Product[]> {
+    let categoryParam: string
+    categories?.map((c) => {
+        if (!categoryParam) {
+            categoryParam = `?category=${c}`
+        } else {
+            categoryParam = `${categoryParam}&category=${c}`
+        }
+    })
+    const param = categoryParam ?? "/"
+    const url = `${process.env.PRODUCT_URL}/api/v1/products${param}`
+    console.log(url)
+    const data = await fetch(url, {cache: "no-cache"})
     return data.json()
 }
 
