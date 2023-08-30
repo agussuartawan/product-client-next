@@ -5,7 +5,7 @@ interface Data {
 }
 
 const getCount = async (): Promise<Data> => {
-    const data = await fetch("http://localhost:3069/api/v1/carts/count", {cache: "no-cache"})
+    const data = await fetch(`${process.env.PRODUCT_URL}/api/v1/carts/count`, {cache: "no-cache"})
     return data.json()
 }
 

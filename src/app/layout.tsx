@@ -2,7 +2,6 @@ import { Header } from "@/components/layout/Header"
 import "./globals.css"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
-import { Sidebar } from "@/components/layout/Sidebar"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -19,11 +18,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={inter.className}>
-                <section>
-                    <Header></Header>
-                    <Sidebar></Sidebar>
-                </section>
-
+                <Header></Header>
                 <div className="container ml-56 w-auto">{children}</div>
             </body>
         </html>

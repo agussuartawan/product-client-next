@@ -1,8 +1,9 @@
 import Image from "next/image"
 import Subscribe from "@/components/Subscribe"
+import { redirect } from "next/navigation"
 
 export default function Home() {
-
+    redirect("/products")
     return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
 
