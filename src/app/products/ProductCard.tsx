@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import currency from "@/helper/currency"
-import NumberInput from "../../components/input/NumberInput"
+import currency from '@/helper/currency'
+import NumberInput from '../../components/input/NumberInput'
 
 export default function ProductCard(props: {
     image?: string
@@ -35,7 +35,7 @@ export default function ProductCard(props: {
             <img
                 src={
                     image ??
-                    "https://images.unsplash.com/photo-1580265862291-4251b8c7e836?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                    'https://images.unsplash.com/photo-1580265862291-4251b8c7e836?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
                 }
                 alt="product-image"
                 className="h-64 w-96 object-cover transition duration-500 group-hover:scale-105 sm:h-72"
@@ -47,7 +47,7 @@ export default function ProductCard(props: {
                 </span>
 
                 <h3 className="mt-4 text-lg font-medium text-gray-900">
-                    {title ?? "No Title"}
+                    {title ?? 'No Title'}
                 </h3>
 
                 <p className="mt-1.5 text-sm text-gray-700">
