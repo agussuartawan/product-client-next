@@ -1,5 +1,5 @@
-import CartButton from "@/components/CartButton"
-import Link from "next/link"
+import CartButton from '@/components/CartButton'
+import Link from 'next/link'
 
 export function Header(props: { isLogin: boolean }) {
     return (
@@ -26,7 +26,7 @@ export function Header(props: { isLogin: boolean }) {
                     <div className="md:flex md:items-center md:gap-12">
                         <nav aria-label="Global" className="hidden md:block">
                             <ul className="flex items-center gap-6 text-sm">
-                                <li>
+                                <li className="font-bold">
                                     <a
                                         className="text-gray-500 transition hover:text-gray-500/75"
                                         href="/"

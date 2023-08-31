@@ -1,18 +1,43 @@
 'use client'
 
+import NumberInput from '@/components/input/NumberInput'
 import currency from '@/helper/currency'
-import NumberInput from '../../components/input/NumberInput'
+import { useState } from 'react'
+
+type CartBody = {
+    qty: number
+    productId: string
+}
+
+const addCart = async (body: CartBody) => {
+    fetch(`${process.env.NEXT_PUBLIC_PRODUCT_URL}/api/v1/carts`, {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+}
 
 export default function ProductCard(props: {
     image?: string
     desc?: string
     price?: number
     title?: string
+    productId: string
 }) {
-    const { image, desc, title, price } = props
+    const { image, desc, title, price, productId } = props
+    const [showQty, setShowQty] = useState(true)
+    const [qty, setQty] = useState(0)
+
+    const body: CartBody = { qty, productId }
+    if (qty > 0) {
+        console.log(JSON.stringify(body))
+        addCart(body).catch((err) => console.log(err))
+    }
 
     return (
-        <a href="#" className="group relative block overflow-hidden">
+        <a className="group relative block overflow-hidden rounded-md">
             <button className="absolute end-4 top-4 z-10 rounded-full bg-white p-1.5 text-gray-900 transition hover:text-gray-900/75">
                 <span className="sr-only">Wishlist</span>
 
@@ -55,9 +80,16 @@ export default function ProductCard(props: {
                 </p>
 
                 <form className="mt-4">
-                    <button className="block w-full rounded bg-yellow-400 p-4 text-sm font-medium transition hover:scale-105">
-                        Add to Cart
-                    </button>
+                    {showQty ? (
+                        <NumberInput name="qty" setQty={setQty} />
+                    ) : (
+                        <button
+                            className="block w-full rounded bg-yellow-400 p-4 text-sm font-medium transition hover:scale-105"
+                            onClick={() => setShowQty(!showQty)}
+                        >
+                            Add to Cart
+                        </button>
+                    )}
                 </form>
             </div>
         </a>

@@ -37,7 +37,7 @@ export function ProductSidebar({ handleChange }: any) {
     }
 
     return (
-        <div className="flex flex-col h-1/3 justify-between border-e bg-white mx-5 my-5 w-1/6 rounded-md">
+        <div className="flex flex-col h-1/3 justify-between border-e bg-white ml-5 my-7 w-1/4 rounded-md">
             <div className="px-4 pt-6">
                 <SearchInput />
             </div>
