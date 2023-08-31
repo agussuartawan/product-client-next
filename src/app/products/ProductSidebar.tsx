@@ -1,10 +1,10 @@
-"use client"
+'use client'
 
-import { Animation } from "@/components/Animation"
-import React from "react"
-import useSWR from "swr"
-import { SearchInput } from "@/components/input/SearchInput"
-import { useRouter, useSearchParams } from "next/navigation"
+import { Animation } from '@/components/Animation'
+import React from 'react'
+import useSWR from 'swr'
+import { SearchInput } from '@/components/input/SearchInput'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 interface Category {
     categories: string[]
@@ -15,7 +15,7 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
 export function ProductSidebar({ handleChange }: any) {
     const searchParam = useSearchParams()
-    let categoryArray = searchParam.getAll("category")
+    let categoryArray = searchParam.getAll('category')
     let name: string
     const router = useRouter()
     const { data, isValidating } = useSWR(url, fetcher)
@@ -28,7 +28,7 @@ export function ProductSidebar({ handleChange }: any) {
             categoryArray = categoryArray.filter((e) => e != category)
         }
 
-        let query: string = "?"
+        let query: string = '?'
         categoryArray.map((c) => {
             query += `category=${c}&`
         })
