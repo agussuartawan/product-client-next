@@ -1,9 +1,8 @@
 import { Header } from "@/components/layout/Header"
 import "./globals.css"
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
-
-const inter = Inter({ subsets: ["latin"] })
+import { ProductSidebar } from "@/app/products/ProductSidebar"
+import { PageLoading } from "@/components/PageLoading"
 
 export const metadata: Metadata = {
     title: "Create Next App",
@@ -17,9 +16,12 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body className={inter.className}>
-                <Header></Header>
-                <div className="container ml-56 w-auto">{children}</div>
+            <body className="bg-slate-100">
+                <Header isLogin={true} />
+                <div className="flex flex-row mt-16">
+                    <ProductSidebar />
+                    <div className="container w-auto -mt-9">{children}</div>
+                </div>
             </body>
         </html>
     )

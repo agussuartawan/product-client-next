@@ -1,15 +1,16 @@
 import React from "react"
-import { ProductSidebar } from "@/app/products/ProductSidebar"
 import { Metadata } from "next"
+import { ProductList } from "@/app/products/ProductList"
+import { useRouter } from "next/navigation"
 
 export const metadata: Metadata = {
-    title: "Product List"
+    title: "Product List",
 }
 
 export default function Product() {
     return (
-        <main className="flex flex-col items-center justify-between p-16">
-            <ProductSidebar/>
+        <main className="p-16">
+            <ProductList />
         </main>
     )
 }

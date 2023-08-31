@@ -2,19 +2,23 @@
 
 import { Animation } from "@/components/Animation"
 import React from "react"
-import { ProductList } from "@/app/products/ProductList"
 import useSWR from "swr"
+import { SearchInput } from "@/components/input/SearchInput"
+import { useRouter, useSearchParams } from "next/navigation"
 
 interface Category {
     categories: string[]
 }
 
-export function ProductSidebar() {
-    let categoryArray: string[] = []
-    let name: string
+const url = `${process.env.NEXT_PUBLIC_PRODUCT_URL}/api/v1/products/categories`
+const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
-    const url = `${process.env.PRODUCT_URL}/api/v1/products/categories`
-    const { data, error, isValidating } = useSWR(url, (url: string) => fetch(url).then(res => res.json()))
+export function ProductSidebar({ handleChange }: any) {
+    const searchParam = useSearchParams()
+    let categoryArray = searchParam.getAll("category")
+    let name: string
+    const router = useRouter()
+    const { data, isValidating } = useSWR(url, fetcher)
 
     const filterByCategory = (event: React.ChangeEvent<HTMLInputElement>) => {
         const category = event.target.value
@@ -23,60 +27,53 @@ export function ProductSidebar() {
         } else {
             categoryArray = categoryArray.filter((e) => e != category)
         }
+
+        let query: string = "?"
+        categoryArray.map((c) => {
+            query += `category=${c}&`
+        })
+
+        router.push(`/products${query}`)
     }
 
     return (
-        <div className={"grid grid-cols-2"}>
-            <div
-                id="default-sidebar"
-                className="fixed top-16 left-3 mt-5 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 col-span-1"
-                aria-label="ProductList"
-            >
-                <div className="px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800 rounded-xl">
-                    <ul className="space-y-2 font-medium">
-                        <li>
-                            <a
-                                href="#"
-                                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                            >
-                                <svg
-                                    className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                                    aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="currentColor"
-                                    viewBox="0 0 22 21"
-                                >
-                                    <path
-                                        d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
-                                    <path
-                                        d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
-                                </svg>
-                                <span className="ml-3">Category</span>
-                            </a>
-                        </li>
-                        <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"></hr>
-                        { <Animation/> } {/*data.categories.map((c: string, index: number) =>
-                            <div key={index} className="flex items-center mb-4 px-2">
+        <div className="flex flex-col h-1/3 justify-between border-e bg-white mx-5 my-5 w-1/6 rounded-md">
+            <div className="px-4 pt-6">
+                <SearchInput />
+            </div>
+            <div className="px-4 pt-3">
+                <ul className="mt-3 space-y-1">
+                    <li>
+                        <a className="block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700">
+                            Category
+                        </a>
+                    </li>
+                </ul>
+                <div className="py-2">
+                    {isValidating ? (
+                        <Animation />
+                    ) : (
+                        data &&
+                        data.categories.map((c: string, index: number) => (
+                            <div key={index} className="flex item-center mb-2">
                                 <input
-                                    onChange={filterByCategory}
-                                    id={`checkbox-${index}`}
+                                    id={`category-${index}`}
                                     type="checkbox"
+                                    className="ml-2"
                                     value={c}
-                                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                    onChange={filterByCategory}
+                                    checked={categoryArray.includes(c)}
                                 />
                                 <label
-                                    htmlFor={`checkbox-${index}`}
-                                    className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                    htmlFor={`category-${index}`}
+                                    className="px-2 text-black"
                                 >
                                     {c}
                                 </label>
-                            </div>*/}
-                    </ul>
+                            </div>
+                        ))
+                    )}
                 </div>
-            </div>
-
-            <div className={"col-end-11 float-left"}>
-                <ProductList categories={categoryArray} />
             </div>
         </div>
     )
